@@ -49,6 +49,25 @@ namespace BRS.Boargame.Server.Controllers
                 }
             };
         }
+
+        [HttpPost]
+        public int Save([FromBody]GameDetail newGame)
+        {
+            var tempGameToSave = newGame;
+
+            return 4200;
+            
+        }
+
+        [HttpPut]
+        public int Update([FromBody]GameDetail updateGame)
+        {
+            var tempGameToSave = updateGame;
+
+            return 4200;
+
+        }
+
     }
 }
             

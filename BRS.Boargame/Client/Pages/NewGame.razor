@@ -1,0 +1,36 @@
+@page "/games/new"
+@using BRS.Boargame.Shared
+@inject HttpClient Http
+
+
+
+<EditForm Model="@newGame" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <InputText id="name" @bind-Value="newGame.Name" />
+
+    <InputText id="description" @bind-Value="newGame.Description" />
+
+    <InputNumber id="min-player" @bind-Value="newGame.MinPlayerCount" />
+
+    <InputNumber id="max-player" @bind-Value="newGame.MaxPlayerCount" />
+
+    <InputNumber id="min-time" @bind-Value="newGame.MinPlayTime" />
+
+    <InputNumber id="max-time" @bind-Value="newGame.MaxPlayTime" />
+
+
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    private GameDetail newGame = new GameDetail();
+
+    private void HandleValidSubmit()
+    {
+
+    }
+}
+
