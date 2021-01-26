@@ -1,4 +1,4 @@
-@page "/game/{gameId}"
+@page "/game/{gameId:int}"
 @using BRS.Boargame.Shared
 @inject HttpClient Http
 
@@ -56,13 +56,13 @@ else
 
 @code {
     [Parameter]
-    public string gameId { get; set; }
+    public int gameId { get; set; }
 
     private GameDetail game;
 
     protected override async Task OnInitializedAsync()
     {
-        game = await Http.GetFromJsonAsync<GameDetail>("Game");
+        game = await Http.GetFromJsonAsync<GameDetail>($"api/game/{gameId}");
     }
 }
 

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace BRS.Boargame.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("/api/game")]
     public class GameController : ControllerBase
     {
         private readonly ILogger<GameController> logger;
@@ -20,7 +20,30 @@ namespace BRS.Boargame.Server.Controllers
         }
 
         [HttpGet]
-        public GameDetail Get(int gameId)
+        public List<GameItem> GetAll()
+        {
+            return new List<GameItem>() {
+                new GameItem()
+                {
+                    Id = 42,
+                    Name = "Game number 42"
+                },
+                new GameItem()
+                {
+                    Id = 43,
+                    Name = "Game number 43"
+                },
+                new GameItem(){
+                    Id = 44,
+                    Name = "Game number 44"
+                },
+
+            };
+        }
+
+
+        [HttpGet("{gameId:int}")]
+        public GameDetail GetOne(int gameId)
         {
 
             return new GameDetail()
@@ -51,16 +74,16 @@ namespace BRS.Boargame.Server.Controllers
         }
 
         [HttpPost]
-        public int Save([FromBody]GameDetail newGame)
+        public int Save([FromBody] GameDetail newGame)
         {
             var tempGameToSave = newGame;
 
             return 4200;
-            
+
         }
 
         [HttpPut]
-        public int Update([FromBody]GameDetail updateGame)
+        public int Update([FromBody] GameDetail updateGame)
         {
             var tempGameToSave = updateGame;
 
@@ -70,8 +93,8 @@ namespace BRS.Boargame.Server.Controllers
 
     }
 }
-            
 
 
 
-            
+
+

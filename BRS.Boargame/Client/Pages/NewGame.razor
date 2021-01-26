@@ -1,4 +1,4 @@
-@page "/games/new"
+@page "/game/new"
 @using BRS.Boargame.Shared
 @inject HttpClient Http
 
@@ -8,29 +8,48 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
 
-    <InputText id="name" @bind-Value="newGame.Name" />
+    <div class="form-group">
+        <label for="name">Name: </label>
+        <InputText id="name" @bind-Value="newGame.Name" />
+    </div>
 
-    <InputText id="description" @bind-Value="newGame.Description" />
+    <div class="form-group">
+        <label for="description">Description: </label>
+        <InputText id="description" @bind-Value="newGame.Description" />
+    </div>
 
-    <InputNumber id="min-player" @bind-Value="newGame.MinPlayerCount" />
+    <div class="form-group">
+        <label for="min-player">Min Player: </label>
+        <InputNumber id="min-player" @bind-Value="newGame.MinPlayerCount" />
+    </div>
 
-    <InputNumber id="max-player" @bind-Value="newGame.MaxPlayerCount" />
+    <div class="form-group">
+        <label for="max-player">Max Player: </label>
+        <InputNumber id="max-player" @bind-Value="newGame.MaxPlayerCount" />
+    </div>
 
-    <InputNumber id="min-time" @bind-Value="newGame.MinPlayTime" />
+    <div class="form-group">
+        <label for="min-time">Min Time: </label>
+        <InputNumber id="min-time" @bind-Value="newGame.MinPlayTime" />
+    </div>
 
-    <InputNumber id="max-time" @bind-Value="newGame.MaxPlayTime" />
+    <div class="form-group">
+        <label for="max-time">Max Time: </label>
+        <InputNumber id="max-time" @bind-Value="newGame.MaxPlayTime" />
+    </div>
 
 
+    <button type="submit" class="btn btn-primary">Submit</button>
 
-    <button type="submit">Submit</button>
 </EditForm>
 
 @code {
     private GameDetail newGame = new GameDetail();
 
-    private void HandleValidSubmit()
+    private async void HandleValidSubmit()
     {
-
+        var response = await Http.PostAsJsonAsync("api/game", newGame);
+        var id = await response.Content.ReadFromJsonAsync<int>();
     }
 }
 
