@@ -3,13 +3,19 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
 	  <Nullable>enable</Nullable>
+	  <AssemblyName>BRS.Boargame.Server</AssemblyName>
+	  <RootNamespace>BRS.Boargame.Server</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AWSSDK.Extensions.NETCore.Setup" Version="3.3.101" />
+    <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\BRS.Boardgame.SimpleDB\BRS.Boardgame.SimpleDB.csproj" />
     <ProjectReference Include="..\Client\BRS.Boargame.Client.csproj" />
     <ProjectReference Include="..\Shared\BRS.Boargame.Shared.csproj" />
   </ItemGroup>

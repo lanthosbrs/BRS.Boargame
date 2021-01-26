@@ -1,3 +1,5 @@
+using Amazon.SimpleDB;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
+using System.Reflection;
 
 namespace BRS.Boargame.Server
 {
@@ -23,8 +26,13 @@ namespace BRS.Boargame.Server
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddDefaultAWSOptions(Configuration.GetAWSOptions());
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddMediatR(typeof(BRS.Boardgame.SimpleDB.Client).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(BRS.Boargame.Shared.Messages.SaveGame).GetTypeInfo().Assembly);
+            services.AddAWSService<IAmazonSimpleDB>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

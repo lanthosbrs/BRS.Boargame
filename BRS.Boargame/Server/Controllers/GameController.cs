@@ -1,4 +1,6 @@
 ﻿using BRS.Boargame.Shared;
+using BRS.Boargame.Shared.Messages;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -13,10 +15,11 @@ namespace BRS.Boargame.Server.Controllers
     public class GameController : ControllerBase
     {
         private readonly ILogger<GameController> logger;
-
-        public GameController(ILogger<GameController> logger)
+        IMediator mediator;
+        public GameController(ILogger<GameController> logger, IMediator mediator)
         {
             this.logger = logger;
+            this.mediator = mediator;
         }
 
         [HttpGet]
@@ -49,7 +52,7 @@ namespace BRS.Boargame.Server.Controllers
             return new GameDetail()
             {
                 Description = "TempDesc",
-                Id = 1,
+                ItemName = Guid.NewGuid().ToString(),
                 LastWinnerId = 42,
                 LastWinnerRemarks = "HAHAHAHAH I WON",
                 MaxPlayerCount = 5,
@@ -74,12 +77,11 @@ namespace BRS.Boargame.Server.Controllers
         }
 
         [HttpPost]
-        public int Save([FromBody] GameDetail newGame)
+        public async Task<GameAdded> Save([FromBody] GameDetail newGame)
         {
-            var tempGameToSave = newGame;
+            var response = await mediator.Send(SaveGame.With(newGame));
 
-            return 4200;
-
+            return response;
         }
 
         [HttpPut]

@@ -7,7 +7,7 @@ namespace BRS.Boargame.Shared
 {
     public class GameDetail
     {
-        public int Id { get; set; } = default!;
+        public string? ItemName { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "Name is too long.")]
