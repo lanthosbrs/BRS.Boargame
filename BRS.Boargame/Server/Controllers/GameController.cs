@@ -28,16 +28,16 @@ namespace BRS.Boargame.Server.Controllers
             return new List<GameItem>() {
                 new GameItem()
                 {
-                    Id = 42,
+                    Id = "b5679382-cc5f-4662-a6e0-93f6772242f6",
                     Name = "Game number 42"
                 },
                 new GameItem()
                 {
-                    Id = 43,
+                    Id = "b5679382-cc5f-4662-a6e0-93f6772242f6",
                     Name = "Game number 43"
                 },
                 new GameItem(){
-                    Id = 44,
+                    Id = "b5679382-cc5f-4662-a6e0-93f6772242f6",
                     Name = "Game number 44"
                 },
 
@@ -45,9 +45,12 @@ namespace BRS.Boargame.Server.Controllers
         }
 
 
-        [HttpGet("{gameId:int}")]
-        public GameDetail GetOne(int gameId)
+        [HttpGet("{gameId}")]
+        public async Task<GameDetail> GetOne(string gameId)
         {
+            var response = await mediator.Send(GetGame.With(gameId));
+
+            return response;
 
             return new GameDetail()
             {
@@ -77,7 +80,7 @@ namespace BRS.Boargame.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<GameAdded> Save([FromBody] GameDetail newGame)
+        public async Task<string> Save([FromBody] GameDetail newGame)
         {
             var response = await mediator.Send(SaveGame.With(newGame));
 

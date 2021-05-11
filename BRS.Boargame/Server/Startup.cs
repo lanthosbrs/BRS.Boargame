@@ -31,6 +31,7 @@ namespace BRS.Boargame.Server
             services.AddRazorPages();
             services.AddMediatR(typeof(BRS.Boardgame.SimpleDB.Client).GetTypeInfo().Assembly);
             services.AddMediatR(typeof(BRS.Boargame.Shared.Messages.SaveGame).GetTypeInfo().Assembly);
+            services.AddMediatR(typeof(BRS.Boargame.Shared.Messages.GetGame).GetTypeInfo().Assembly);
             services.AddAWSService<IAmazonSimpleDB>();
 
         }

@@ -1,4 +1,4 @@
-@page "/game/{gameId:int}"
+@page "/game/{gameId}"
 @using BRS.Boargame.Shared
 @inject HttpClient Http
 
@@ -56,7 +56,7 @@ else
 
 @code {
     [Parameter]
-    public int gameId { get; set; }
+    public string gameId { get; set; }
 
     private GameDetail game;
 

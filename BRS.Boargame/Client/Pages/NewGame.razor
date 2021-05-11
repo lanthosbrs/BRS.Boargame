@@ -46,10 +46,13 @@
 @code {
     private GameDetail newGame = new GameDetail();
 
+
     private async void HandleValidSubmit()
     {
         var response = await Http.PostAsJsonAsync("api/game", newGame);
-        var id = await response.Content.ReadFromJsonAsync<string>();
+        var gameId = await response.Content.ReadFromJsonAsync<string>();
+
+
     }
 }
 

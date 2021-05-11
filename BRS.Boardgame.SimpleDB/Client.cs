@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BRS.Boardgame.SimpleDB
 {
-    public class Client : IRequestHandler<SaveGame, GameAdded>
+    public class Client : IRequestHandler<SaveGame, string>, IRequestHandler<GetGame, GameDetail>
     {
 
         private IAmazonSimpleDB simpleDBClient;
@@ -21,24 +21,37 @@ namespace BRS.Boardgame.SimpleDB
             this.simpleDBClient = simpleDBClient;
         }
 
-        public Task<GameAdded> Handle(SaveGame request, CancellationToken cancellationToken)
+        public Task<string> Handle(SaveGame request, CancellationToken cancellationToken)
         {
-
-
             var attributes = request.GameToSave.ToReplaceableAttributes();
 
 
+            var id = Guid.NewGuid().ToString();
 
             var result = simpleDBClient.PutAttributesAsync(new PutAttributesRequest()
             {
                 DomainName = "Boardgames",
                 Attributes = attributes,
-                ItemName = Guid.NewGuid().ToString()
+                ItemName = id
             });
 
             result.Wait();
 
-            return Task.FromResult(new GameAdded() { Id = 123456789 });
+            return Task.FromResult(id);
+        }
+
+        public Task<GameDetail> Handle(GetGame request, CancellationToken cancellationToken)
+        {
+            var id = request.Id;
+
+            var result = simpleDBClient.SelectAsync(new SelectRequest()
+            {
+                SelectExpression = $"SELECT * FROM `Boardgames` where itemName() = '{id}' LIMIT 1"
+            });
+
+            result.Wait();
+            
+            return Task.FromResult(new GameDetail() );
         }
     }
 }
