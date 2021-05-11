@@ -23,25 +23,11 @@ namespace BRS.Boargame.Server.Controllers
         }
 
         [HttpGet]
-        public List<GameItem> GetAll()
+        public async Task<List<GameItem>> GetAll()
         {
-            return new List<GameItem>() {
-                new GameItem()
-                {
-                    Id = "b5679382-cc5f-4662-a6e0-93f6772242f6",
-                    Name = "Game number 42"
-                },
-                new GameItem()
-                {
-                    Id = "b5679382-cc5f-4662-a6e0-93f6772242f6",
-                    Name = "Game number 43"
-                },
-                new GameItem(){
-                    Id = "b5679382-cc5f-4662-a6e0-93f6772242f6",
-                    Name = "Game number 44"
-                },
+            var response = await mediator.Send(new GetGames());
 
-            };
+            return response;
         }
 
 
@@ -51,32 +37,6 @@ namespace BRS.Boargame.Server.Controllers
             var response = await mediator.Send(GetGame.With(gameId));
 
             return response;
-
-            return new GameDetail()
-            {
-                Description = "TempDesc",
-                ItemName = Guid.NewGuid().ToString(),
-                LastWinnerId = 42,
-                LastWinnerRemarks = "HAHAHAHAH I WON",
-                MaxPlayerCount = 5,
-                MinPlayerCount = 1,
-                MaxPlayTime = 115,
-                MinPlayTime = 95,
-                Name = "Sythe-Temp",
-                Plays = new List<PlayedCount>()
-                {
-                    new PlayedCount()
-                    {
-                        PlayedAt = 3,
-                        Total = 55
-                    },
-                    new PlayedCount()
-                    {
-                        PlayedAt = 4,
-                        Total = 5
-                    }
-                }
-            };
         }
 
         [HttpPost]
